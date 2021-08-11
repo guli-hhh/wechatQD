@@ -1,0 +1,19 @@
+<view class="contianer">
+  <view>请填写您的邮箱，签到数据会以附件的形式发送给您。</view>
+  <view>
+    如果没有收到，是邮件被拦截了（QQ邮箱默认拦截），可以去邮箱的垃圾箱检查，并右键标记-这不是垃圾右键。
+  </view>
+  <view>
+    实在收不到，请加【联系我们】下方微信，由我们手动转发邮件。
+  </view>
+  
+  <view>
+    <form bindsubmit="formsubmit"> 
+      <input class="inp" placeholder="请在这输入您的邮箱" name="email"/>
+      <button class="btn" type="primary" formType="submit">发送</button>
+    </form>
+    
+
+  </view>
+  
+</view>

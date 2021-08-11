@@ -1,0 +1,8 @@
+.tips{
+  padding: 20px;
+}
+.url{
+  color: blue;
+  border-bottom: 1px solid blue;
+  cursor: pointer;
+}

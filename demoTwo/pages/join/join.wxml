@@ -1,0 +1,28 @@
+<view class="publish"  wx:if="{{tips}}">
+    <image src="/images/kong.png"></image>
+    <view class="a">你还没有参加过签到</view>
+    <view class="b">去发现页加入一个吧</view>
+</view>
+
+
+<block wx:for="{{dataList}}" wx:key="item">
+    <view class='container' hover-class="hover"  hover-stay-time="100" bindtap="change" data-pid="{{item.pid}}" data-pstatus="{{item.pstatus}}" data-id="{{item.pro_id}}" >
+        <view class='{{item.flag}}'>
+            {{item.stauts}}
+        </view>
+        <view class="name">
+            {{item.projectName}}
+        </view>
+    <image src='{{item.creator}}' class='right'></image>
+    <view class='user'>
+        <image src='/images/id.png'></image>
+        <text>{{item.inviteId}}</text>
+    </view>
+
+    <view class='time'>
+        <image src='/images/tim.png'></image>
+        <text>{{item.startTime}}</text>
+    </view>
+    </view>
+
+</block>

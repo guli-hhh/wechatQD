@@ -1,0 +1,307 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+	<link rel="stylesheet" type="text/css" href="../static/h-ui/css/H-ui.min.css" />
+	<link rel="stylesheet" type="text/css" href="../static/h-ui.admin/css/H-ui.admin.css" />
+	<link rel="stylesheet" type="text/css" href="../lib/Hui-iconfont/1.0.8/iconfont.css" />
+	<link rel="stylesheet" type="text/css" href="../static/h-ui.admin/skin/default/skin.css" id="skin" />
+	<link rel="stylesheet" type="text/css" href="../static/h-ui.admin/css/style.css" />
+
+	<link rel="stylesheet" href="../css/bootstrap.min.css">
+<style>
+	.indcon{
+		padding: 20px;
+	}
+	.indcon>div{
+		display: flex;
+		margin-top: 20px;
+	}
+	.userTotal,.activeTotal,.totalad{
+		font-size: 25px;
+		height: 40px;
+		line-height: 40px;
+		width: 50px;
+		padding-left: 25px;
+	}
+	.userNum,.activeNum,.adNum{
+		font-size: 23px;
+		color: red;
+	}
+
+	#addiv,#addiv1{
+		height: 380px;
+		width: 500px;
+		margin-left: 150px;
+	}
+	.addiv>h5{
+		height: 20px;
+		line-height: 20px;
+	}
+	.item1{
+		height: 100px;
+		width: auto;
+		margin: 0 20px;
+		box-shadow:0px 15px 10px -15px #f1f1f1;
+		border-radius: 10px;
+		margin-top: -50px;
+		padding: 10px;
+	}
+
+	.spanstyle{
+		margin-left: 10px;
+	}
+</style>
+
+<title>我的桌面</title>
+</head>
+<body>
+<div class="page-container">
+	<p class="f-20 text-success">欢迎进入打卡签到后台管理</p>
+	<div class="indcon">
+		<div class="item1">
+			<div>
+				<span class="userTotal">总用户数：</span><span class="userNum"></span>
+				<span class="week spanstyle"></span>
+				<span class="month spanstyle"></span>
+			</div>
+		</div>
+		<div class="item1">
+			<div>
+				<span class="activeTotal">总活动数：</span><span class="activeNum"></span>
+				<span class="rone spanstyle"></span>
+				<span class="pjoins spanstyle"></span>
+				<span class="signs spanstyle"></span>
+				<span class="jone spanstyle"></span>
+			</div>
+		</div>
+		<div id="addiv1"></div>
+		<div id="addiv"></div>
+	</div>
+
+</div>
+<footer class="footer mt-20">
+	<div class="container">
+		<p>感谢老师指导，组员团结尽力<br>
+			Copyright &copy;2021-06 OBTK.<br>
+			本后台系统由<a href="http://www.h-ui.net/" target="_blank" title="H-ui前端框架">H-ui前端框架</a>提供前端技术支持</p>
+	</div>
+</footer>
+<script type="text/javascript" src="../lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="../static/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="../lib/jquery/jquery-3.4.1.min.js"></script>
+<script src="../js/echarts.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?080836300300be57b7f34f4b3e97d911";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<script>
+	$(()=>{
+		//发送请求获取活动统计数据
+		$.ajax({
+			url:"/wx/pro/getProData",
+			dataType:"json",
+			success:function (data) {
+				console.log(data);
+				if(data){
+                    //日均创建
+                    let r=(data.pros/data.days).toFixed(2);
+                    //总参与率
+                    let j=(data.signs/data.pjoins).toFixed(2);
+                    let j1=(j*100).toFixed(2);
+                    console.log(j1);
+				    $(".activeNum").text(data.pros);
+				   	$(".rone").text("活动日均创建："+r);
+				   	$(".pjoins").text("活动总参与数："+data.pjoins);
+				   	$(".signs").text("活动总签到数："+data.signs);
+				   	$(".jone").text("活动总签到率："+j1+"%");
+
+				}
+            }
+		});
+
+		//发送请求获取广告统计数据
+        $.ajax({
+            url: "/wx/advert/getAdProfit",
+            dataType: "json",
+			success:function (data) {
+				console.log(data);
+				if(data){
+				    let one=data.profit0.toFixed(2);
+				    let two=data.profit1.toFixed(2);
+				    let three=data.profit2.toFixed(2);
+				    let four=data.profit3.toFixed(2);
+				    let five=data.profit4.toFixed(2);
+				    let six=data.profit5.toFixed(2);
+				    let seven=data.profit6.toFixed(2);
+                    let chartDom = document.getElementById('addiv');
+                    let myChart = echarts.init(chartDom);
+                    let option = {
+                        title: {
+                            text: '本周广告盈利'
+                        },
+                        tooltip: {
+                            trigger: 'axis'
+                        },
+                        legend: {
+                            data: ['周盈利']
+                        },
+                        grid: {
+                            left: '3%',
+                            right: '4%',
+                            bottom: '3%',
+                            containLabel: true
+                        },
+                        toolbox: {
+                            feature: {
+                                saveAsImage: {}
+                            }
+                        },
+                        xAxis: {
+                            type: 'category',
+                            boundaryGap: false,
+                            data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+                        },
+                        yAxis: {
+                            type: 'value'
+                        },
+                        series: [
+                            {
+                                name: '周盈利',
+                                type: 'line',
+                                data: [one,two,three,four,five,six,seven],
+                                label:{
+                                    show:true
+                                },
+                                smooth:true
+                            }
+                        ]
+                    };
+
+                    myChart.setOption(option);
+
+
+                    let click0=data.click0;
+                    let click1=data.click1;
+                    let click2=data.click2;
+                    let click3=data.click3;
+                    let click4=data.click4;
+                    let click5=data.click5;
+                    let click6=data.click6;
+
+                    let show0=data.show0;
+                    let show1=data.show1;
+                    let show2=data.show2;
+                    let show3=data.show3;
+                    let show4=data.show4;
+                    let show5=data.show5;
+                    let show6=data.show6;
+
+                    let l0=(click0/show0).toFixed(2);
+                    let l1=(click1/show1).toFixed(2);
+                    let l2=(click2/show2).toFixed(2);
+                    let l3=(click3/show3).toFixed(2);
+                    let l4=(click4/show4).toFixed(2);
+                    let l5=(click5/show5).toFixed(2);
+                    let l6=(click6/show6).toFixed(2);
+                    let chartDom1 = document.getElementById('addiv1');
+                    let myChart1 = echarts.init(chartDom1);
+                    let option1 = {
+                        title: {
+                            text: '本周广告统计'
+                        },
+                        tooltip: {
+                            trigger: 'axis'
+                        },
+                        legend: {
+                            data: ['点击量', '展示量', '点击率']
+                        },
+                        grid: {
+                            left: '3%',
+                            right: '4%',
+                            bottom: '3%',
+                            containLabel: true
+                        },
+                        toolbox: {
+                            feature: {
+                                saveAsImage: {}
+                            }
+                        },
+                        xAxis: {
+                            type: 'category',
+                            boundaryGap: false,
+                            data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+                        },
+                        yAxis: {
+                            type: 'value'
+                        },
+                        series: [
+                            {
+                                name: '点击量',
+                                type: 'line',
+                                stack: '总量',
+                                data: [click0,click1,click2,click3,click4,click5,click6],
+                                label:{
+                                    show:true
+                                },
+                                smooth:true
+                            },
+                            {
+                                name: '展示量',
+                                type: 'line',
+                                stack: '总量',
+                                data: [show0,show1,show2,show3,show4,show5,show6],
+                                smooth:true,
+								label:{
+                                    show:true
+								}
+                            },
+                            {
+                                name: '点击率',
+                                type: 'line',
+                                stack: '总量',
+                                data: [l0,l1,l2,l3,l4,l5,l6],
+                                smooth:true,
+                                label:{
+                                    show:true
+                                }
+                            }
+                        ]
+                    };
+
+                    myChart1.setOption(option1);
+				}
+            }
+        });
+
+        //发送请求获取用户统计数据
+        $.ajax({
+            url: "/wx/user/getUserData",
+            dataType: "json",
+			success:function (data) {
+				console.log(data);
+				if(data){
+				    $(".userNum").text(data.total);
+				    $(".week").text("本周新增用户："+data.week);
+				    $(".month").text("本月新增用户："+data.month);
+				}
+
+            }
+        });
+
+
+	});
+</script>
+</body>
+</html>

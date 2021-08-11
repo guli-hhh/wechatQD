@@ -1,0 +1,13 @@
+.container{
+  padding:15px;
+  text-align:center;
+}
+.title{
+  font-size: 24px;
+  font-weight: bolder;
+  color: black;
+}
+.container>view{
+  margin-top: 15px;
+  margin-bottom: 15px;
+}

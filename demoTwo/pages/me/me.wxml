@@ -1,0 +1,40 @@
+<view class="userinfo">
+  <open-data type="userAvatarUrl" class="userinfo-avatar">
+
+  </open-data>
+  <open-data type="userNickName" class="userinfo-nickname">
+  
+  </open-data>
+</view>
+<view class="me" bindtap="jump1" hover-class="mebtn" hover-start-time="100">
+    <view class="font">
+      发起签到
+      <image class="dui" src="/images/right.png"></image>
+    </view>
+</view>
+<view class="block"></view>
+<view class="mid" bindtap="jump2" hover-class="mebtn" hover-start-time="100">
+    <view class="font">
+      我发起的签到
+      <image class="dui" src="/images/right.png"></image>
+    </view>
+</view>
+<view class="mid" bindtap="jump3" hover-class="mebtn" hover-start-time="100">
+    <view class="font">
+      我参与的签到
+      <image class="dui" src="/images/right.png"></image>
+    </view>
+</view>
+<view class="block"></view>
+<view class="mid" bindtap="jump4" hover-class="mebtn" hover-start-time="100">
+    <view class="font">
+      使用说明
+      <image class="dui" src="/images/right.png"></image>
+    </view>
+</view>
+<view class="mid" bindtap="jump5" hover-class="mebtn" hover-start-time="100">
+    <view class="font">
+      关于我们
+      <image class="dui" src="/images/right.png"></image>
+    </view>
+</view>

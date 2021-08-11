@@ -1,0 +1,28 @@
+.title{
+  margin: 15px;
+  text-align: center;
+}
+.oldlist{
+  margin-top: 0;
+  height: 85rpx;
+  margin-left: 25rpx;
+  margin-right: 25rpx;
+  background-color: rgb(255, 255, 255);
+  border-style: solid;
+  border-width: 1rpx;
+  border-color: #E3E3E3;
+  border-radius: 3px;
+}
+.name{
+  font-size: 28rpx;
+  color: #555555;
+  padding-top: 22rpx;
+  padding-left: 90rpx;
+}
+.dian{
+  width: 18rpx;
+  height: 18rpx;
+  position: absolute;
+  left: 54rpx;
+  margin-top: 13rpx;
+}

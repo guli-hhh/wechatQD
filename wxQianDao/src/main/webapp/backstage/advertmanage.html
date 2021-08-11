@@ -1,0 +1,295 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+	<link rel="stylesheet" type="text/css" href="../static/h-ui/css/H-ui.min.css" />
+	<link rel="stylesheet" type="text/css" href="../static/h-ui.admin/css/H-ui.admin.css" />
+	<link rel="stylesheet" type="text/css" href="../lib/Hui-iconfont/1.0.8/iconfont.css" />
+	<link rel="stylesheet" type="text/css" href="../static/h-ui.admin/skin/default/skin.css" id="skin" />
+	<link rel="stylesheet" type="text/css" href="../static/h-ui.admin/css/style.css" />
+	<script type="text/javascript" src="../bootstrap/js/jquery.js"></script>
+	<script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../static/layer/2.4/layer.js"></script>
+	<style>
+		.barPage{
+			text-align: right;
+			margin-top: 15px;
+			padding-right: 80px;
+			background-color: #f5f5f5;
+		}
+	</style>
+	<title>广告管理</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页
+	<!--<span class="c-gray en">&gt;</span> 用户中心-->
+	<span class="c-gray en">&gt;</span> 广告管理
+	<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
+	   href="javascript:location.replace(location.href);" title="刷新" >
+		<i class="Hui-iconfont">&#xe68f;</i>
+	</a>
+</nav>
+<div class="pd-20">
+	<input type="text" class="input-text" style="width:250px" placeholder="输入广告昵称" >
+	<button type="button" class="btn btn-success" id="searchBtn" ><i class="icon-search"></i> 搜广告</button>
+	<button type="button" class="btn btn-primary" id="addBtn" ><i class="icon-add"></i> 添加广告</button>
+	<span class="total" style="margin-left: 600px;font-weight: bolder;font-size: 22px"></span>
+</div>
+
+<div class="mt-20">
+	<table class="table table-border table-bordered table-bg table-hover table-sort">
+	<thead>
+	<tr class="text-c">
+		<th width="10">编号</th>
+		<th width="50">广告名称</th>
+		<th width="30">广告类型</th>
+		<th width="30">当前状态</th>
+		<th width="40">上线广告位</th>
+		<th width="50">操作</th>
+	</tr>
+	</thead>
+	<tbody id="list" style="text-align: center"></tbody>
+</table>
+	<p class="barPage" >
+
+	</p>
+</div>
+
+<script type="text/javascript" src="../lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="../lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="../static/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="../static/h-ui.admin/js/H-ui.admin.js"></script>
+
+<script type="text/javascript" src="../lib/jquery/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="../lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="../lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="../lib/laypage/1.2/laypage.js"></script>
+<script>
+    $(()=>{
+        byPage(1);
+
+    });
+
+</script>
+
+<script type="text/javascript">
+    //分页 页号查询事件
+    $(".barPage").on("click",".byPage",function () {
+        var pNo=$(this).text();
+        $("#list").empty();
+        $(".barPage").empty();
+        byPage(pNo)
+    });
+
+    //昵称模糊查询事件
+    $("#searchBtn").click(function () {
+        var adName=$(this).prev().val();
+        $("#list").empty();
+        $(".barPage").empty();
+        if(adName===""){
+            byPage(1);
+            return;
+        }
+        $.ajax({
+            url: '/wx/advert/findLike/'+adName,//注意不需要斜杠
+            type:'get',
+            dataType:'json',
+            success:function (data) {
+                console.log(data)
+                data.forEach(a=>{
+                    let str;
+                    if(a.status==="0"){
+                        str="未使用";
+                    }else if(a.status==="1"){
+                        str="上线";
+                    }else if(a.status==="2"){
+                        str="下线"
+                    }
+                    let str1;
+                    if(str==="未使用"||str==="下线"){
+                        str1="上线";
+                    }else {
+                        str1="下线"
+                    }
+                    let adlc;
+                    if(a.spare1===null){
+                        adlc="";
+                    }else if(a.spare1==="1"){
+                        adlc="一号广告位";
+                    }else if(a.spare1==="2"){
+                        adlc="二号广告位";
+                    }
+                    let $tr=$(`
+                    <tr>
+						<th width="10" style="text-align: center">${a.ad_id}</th>
+						<th width="50">${a.advertName}</th>
+						<th width="30">${a.advertType}</th>
+						<th width="30">${str}</th>
+						<th width="40">${adlc}</th>
+						<th width="50">
+							<button type="button" class="opr btn btn-sm btn-default">${str1}</button>
+							<button type="button" class="detial btn btn-sm btn-primary">详情</button>
+							<button type="button" class="edit btn btn-sm btn-success">编辑</button>
+							<button type="button" class="del btn btn-sm btn-danger">删除</button>
+						</th>
+					</tr>
+                    `);
+                    $("#list").append($tr);
+                });
+            }
+        });
+    });
+
+    //分页查询
+    function byPage(pageNo) {
+        $.ajax({
+            url: '/wx/advert/findByPage/'+pageNo,//注意不需要斜杠
+            type:'get',
+            dataType:'json',
+            success:function (data) {
+				console.log(data);
+                data.list.forEach(a=>{
+                    let str;
+                    if(a.status==="0"){
+                        str="未使用";
+					}else if(a.status==="1"){
+                        str="上线";
+					}else if(a.status==="2"){
+                        str="下线"
+					}
+					let str1;
+                    if(str==="未使用"||str==="下线"){
+                        str1="上线";
+					}else {
+                        str1="下线"
+					}
+                   	let adlc;
+                    if(a.spare1===null){
+                        adlc="";
+					}else if(a.spare1==="1"){
+                        adlc="一号广告位";
+					}else if(a.spare1==="2"){
+                        adlc="二号广告位";
+                    }
+                    let $tr=$(`
+                    <tr>
+						<th width="10" style="text-align: center">${a.ad_id}</th>
+						<th width="50">${a.advertName}</th>
+						<th width="30">${a.advertType}</th>
+						<th width="30">${str}</th>
+						<th width="40">${adlc}</th>
+						<th width="50">
+							<button type="button" class="opr btn btn-sm btn-default">${str1}</button>
+							<button type="button" class="detial btn btn-sm btn-primary">详情</button>
+							<button type="button" class="edit btn btn-sm btn-success">编辑</button>
+							<button type="button" class="del btn btn-sm btn-danger">删除</button>
+						</th>
+					</tr>
+                    `);
+                    $("#list").append($tr);
+                });
+                data.navigatepageNums.forEach(n=>{
+                    let abtn=$(`<span class="byPage" style="cursor: pointer;
+                          height: 10px;
+                          width: 10px;
+                          line-height: 10px;
+                          border-radius: 5px;
+                          background-color: #f5fafe;
+                          margin-right: 8px">${n}</span>`);
+                    $(".barPage").append(abtn);
+                })
+            }
+        });
+    }
+
+    //上下线按钮事件
+    $("#list").on("click",".opr",function () {
+        let btntext=$(this).text();
+        let adid=$(this).parent().prev().prev().prev().prev().prev().text();
+        let adname=$(this).parent().prev().prev().prev().prev().text();
+        console.log(adid);
+        if(btntext==="上线"){
+			//弹出上线窗口
+            sessionStorage.setItem("adid",adid);
+            layer_show("上线表单","online.html",400,250);
+        }else if(btntext==="下线"){
+            //进行下线
+            layer.confirm('确认要下线'+adname+'吗？',function(index){
+                $.ajax({
+                    type: "patch",
+                    url: "/wx/advert/adUnder/"+adid,
+                    // data: JSON.stringify({adid:adidstr, adlc:adlcstr}),
+                    dataType: "json",
+                    success: function (data) {
+                        console.log(data);
+                        if(data===1){
+                            layer.msg('下线成功。',{icon:1,time:1500});
+                            setTimeout(function () {
+                                location.reload();
+                            },2500);
+						}
+                    }
+                });
+            });
+		}
+
+    });
+
+    //详情按钮事件
+    $("#list").on("click",".detial",function () {
+        let adid=$(this).parent().prev().prev().prev().prev().prev().text();
+        let s=$(this).parent().prev().prev().text();
+        if(s==="未使用"){
+            layer.msg('请先上线该广告。',{icon:5,time:1500});
+		}else{
+            sessionStorage.setItem("adid1",adid);
+            location.href="advertdata.html"
+		}
+
+    });
+
+    //添加新广告
+	$("#addBtn").click(function () {
+        layer_show("添加广告","addAd.html",600,300);
+    });
+
+    //编辑按钮事件
+    $("#list").on("click",".edit",function () {
+        let adid=$(this).parent().prev().prev().prev().prev().prev().text();
+        sessionStorage.setItem("eadid",adid);
+        layer_show("编辑广告","addAd.html",600,300);
+
+    });
+
+    //删除按钮事件
+    $("#list").on("click",".del",function () {
+        let adid=$(this).parent().prev().prev().prev().prev().prev().text();
+        let adname=$(this).parent().prev().prev().prev().prev().text();
+        layer.confirm('确认要删除'+adname+'吗？',function(index){
+            $.ajax({
+                type: "delete",
+                url: "/wx/advert/delOne/"+adid,
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                    if(data===1){
+                        layer.msg('删除成功。',{icon:1,time:1500});
+                        setTimeout(function () {
+                            location.reload();
+                        },2500);
+                    }
+                }
+            });
+        });
+
+    });
+
+</script>
+
+</body>
+</html>

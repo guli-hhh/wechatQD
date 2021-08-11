@@ -1,0 +1,137 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<link rel="stylesheet" type="text/css" href="../static/h-ui/css/H-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="../static/h-ui.admin/css/H-ui.admin.css" />
+<link rel="stylesheet" type="text/css" href="../lib/Hui-iconfont/1.0.8/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="../static/h-ui.admin/skin/default/skin.css" id="skin" />
+<link rel="stylesheet" type="text/css" href="../static/h-ui.admin/css/style.css" />
+	<link rel="stylesheet" href="../css/bootstrap.min.css">
+<style>
+	.title{
+		height: 40px;
+		line-height: 40px;
+	}
+	.indbtn1{
+		margin-left: 600px;
+	}
+
+	#userul>li{
+		height: 40px;
+		line-height: 40px;
+		text-align: center;
+	}
+	#table{
+		width: 500px;
+		margin-top: 50px;
+		margin-left: 200px;
+	}
+
+</style>
+
+<title>用户数据管理</title>
+</head>
+<body>
+
+<div>
+	<h3 class="title"><span style="margin-left: 30px">用户详情:</span><button class="btn btn-primary indbtn1">返回</button></h3>
+	<table id="table" class="table table-border table-bordered table-bg table-hover table-sort">
+		<tbody id="list" style="text-align: center"></tbody>
+	</table>
+</div>
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="/lib/jquery/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="/static/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="/static/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="/static/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="../lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="../lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="../lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript" src="../lib/jquery/jquery-3.4.1.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script type="text/javascript">
+
+$(function(){
+
+    //取出浏览器会话缓存中的值。
+    let item = sessionStorage.getItem("userid");
+    if(item){
+        //有值则是进行编辑  先发一个ajax请求查询出一个用户所有的数据
+        $.ajax({
+            type:"get",
+            url:"/wx/user/findOne/"+item,
+            dataType:"json",
+            success:function (data) {
+				console.log(data);
+				if(data){
+                    let $tr1=$(`
+                    <tr>
+                        <th width="50">用户昵称：</th>
+                        <th width="80">${data.nickName}</th>
+                    </tr>
+                    `);
+                    let $tr2=$(`
+                    <tr>
+                        <th width="50">最近登录：</th>
+                        <th width="80">${data.recentlyStr}</th>
+                    </tr>
+                    `);
+                    let $tr3=$(`
+                    <tr>
+                        <th width="50">登录次数：</th>
+                        <th width="80">${data.loginNum}</th>
+                    </tr>
+                    `);
+                    let $tr4=$(`
+                    <tr>
+                        <th width="50">首次授权：</th>
+                        <th width="80">${data.warrantStr}</th>
+                    </tr>
+                    `);
+                    $("#list").append($tr1);
+                    $("#list").append($tr2);
+                    $("#list").append($tr3);
+                    $("#list").append($tr4);
+                    if(data.spare2!=null){
+                        let s="";
+                        if(data.spare2==="设为星标"){
+                            s="是";
+						}else {
+                            s="否";
+						}
+                        let $tr5=$(`
+							<tr>
+								<th width="50">是否为标记用户：</th>
+								<th width="80">${s}</th>
+							</tr>
+							`);
+                        $("#list").append($tr5);
+					}
+
+
+				}
+            }
+        });
+
+        //完成之后，还需要删除缓存
+        sessionStorage.removeItem("userId");
+    }
+
+    //返回按钮
+    $(".indbtn1").click(function () {
+		location.href="usermanage.html";
+    });
+
+
+});
+</script> 
+</body>
+</html>

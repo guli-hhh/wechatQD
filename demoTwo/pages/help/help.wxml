@@ -1,0 +1,42 @@
+<view class="topic">使用说明</view>
+<view class="item">
+    <view class="title">
+      1.蝌蚪签到是什么？
+    </view>
+    <view class="text">
+      I签到是一款极为轻便的扫码签到小程序，你只需一部手机就可以搞定复杂的签到。
+    </view>
+</view>
+<view class="item">
+    <view class="title">
+      2.I签到怎么用？
+    </view>
+    <view class="text">
+      2.1、如果你是签到参与者，你只需微信自带的扫一扫扫一下签到二维码就好了。
+      <image src="/images/use1.jpg" style="width:100%;height:450rpx"></image>
+      <image src="/images/use2.jpg" style="width:100%;height:450rpx"></image>
+    </view>
+    <view class="text">
+      2.2、如果你是签到创建者，请查看我们准备的简易教程（左滑查看下一张）。
+      <swiper  indicator-dots="true" 
+        indicator-color="rgba(0, 0, 0, .3)" class="textimg" >
+        <swiper-item  wx:for="{{imgarr}}" wx:key="index">
+          <image style="width:100%;height:950rpx" src="../../images/help{{item}}.jpg"></image>
+        </swiper-item>
+      </swiper>
+    </view>
+</view>
+<view class="item">
+    <view class="title">
+      3.为什么创建不了签到？
+    </view>
+    <view class="text">
+      这是手机兼容性的问题，可以手动授权解决。
+      <swiper  indicator-dots="true" 
+        indicator-color="rgba(0, 0, 0, .3)" class="textimg" >
+        <swiper-item  wx:for="{{imgarr1}}" wx:key="index">
+          <image style="width:100%;height:950rpx" src="/images/himg{{item}}.jpg"></image>
+        </swiper-item>
+      </swiper>
+    </view>
+</view>

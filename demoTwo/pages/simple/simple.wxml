@@ -1,0 +1,85 @@
+<view class="container">
+    <view class="block"></view>
+    <view class="name">{{vue.projectName}}</view>
+
+    <view class="contain">
+
+    <view class="time">
+        <view class="c">
+            <image src='/images/time.png' ></image>
+        </view>
+        <view class="ti">{{time}}</view>
+    </view>
+
+    <view class="place-name">
+        <view class="n">
+            <image src='/images/place.png' ></image>
+        </view>
+    <view class="place-nam">{{vue.place_name}}（{{vue.place_address}}）</view>
+    </view>
+
+    <view class="place-address">
+        <view class="m">
+            <image src="/images/plpl.png" ></image>
+        </view>
+    <view class="place-addres">{{vue.enroll}}人报名</view>
+    </view>
+    
+    </view>
+     
+
+</view>
+
+<view class="itemdiv">
+    <view>
+        <view class="enroll" bindtap="enroll" data-id="{{vue.pro_id}}" data-enroll="{{vue.enroll}}">
+            <image class="ig1" src='/images/enroll.jpg'></image>
+            <view>报名数据</view>
+        </view>
+        <view class="signdata" bindtap="signdata" data-id="{{vue.pro_id}}" data-enroll="{{vue.enroll}}" data-finish="{{vue.finish}}" data-projectName="{{vue.projectName}}">
+            <image class="ig2" src='/images/signdata.jpg'></image>
+            <view>签到数据</view>
+        </view>
+        <view class="updata">              
+                <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
+                    <view class="picker">
+                        <image class="ig3" src='/images/updata.jpg'></image>
+                        <view>导出数据</view>                    
+                    </view>
+                </picker>
+        </view>
+        
+        
+    </view>
+    <view>
+      <view class="share1">
+        <image class="ig3" src='/images/share1.jpg'></image>
+        <view>
+            <button  plain="true" style="width:80px;height:30px;font-weight:normal" open-type="share">分享链接</button>
+        </view>
+      </view>
+      <view class="qrcode1" bindtap="qrcode" data-id="{{vue.pro_id}}">
+        <image class="ig" src='/images/qrcode.png'></image>
+        <view>签到二维码</view>
+      </view>
+      <view class="more1">
+        <picker bindchange="bindPickerChange1" value="{{index}}" range="{{morearray}}">
+                    <view class="picker">
+                        <image class="ig3" src='/images/more1.jpg'></image>
+                        <view>更多功能</view>                    
+                    </view>
+        </picker>
+        
+      </view>
+    </view>
+</view>
+
+<view wx:if="{{qrcodeflag}}" class="qimg">
+    <image src="{{qrcodeimg}}" style="width:80px;height:80px;" ></image>
+</view>
+
+<view class="del-btn">
+    <button  bindtap="del" data-id="{{vue.pro_id}}" class="bbtn">删除签到</button>
+</view>
+
+

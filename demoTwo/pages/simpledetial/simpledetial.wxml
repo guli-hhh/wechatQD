@@ -1,0 +1,25 @@
+<view class="pname">{{projectName}}</view>
+<view class="div">
+  <view class="left">
+    <view class="un">{{enroll-finish}}</view>
+    <view>未到人数</view>
+  </view>
+  <view class="right">
+    <view>应到人数：{{enroll}}</view>
+    <view>实到人数：{{finish}}</view>
+  </view>
+</view>
+<view class="btn">
+  <button size="mini" bindtap="reto">查看已到成员信息</button>
+</view>
+
+<view wx:if="{{flag}}" class="list">
+  <view class="listtitle">未到成员列表</view>
+  <view class="oldlist" wx:for="{{titlearr}}" wx:key="item" >
+  <view class='name'>
+    <image src='/images/gry.png' class='dian'></image>
+    <text>{{item}}</text>
+  </view> 
+</view>
+</view>
+

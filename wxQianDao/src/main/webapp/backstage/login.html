@@ -1,0 +1,124 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<link href="../static/h-ui/css/H-ui.min.css" rel="stylesheet" type="text/css" />
+<link href="../static/h-ui.admin/css/H-ui.login.css" rel="stylesheet" type="text/css" />
+<link href="../static/h-ui.admin/css/style.css" rel="stylesheet" type="text/css" />
+<link href="../lib/Hui-iconfont/1.0.8/iconfont.css" rel="stylesheet" type="text/css" />
+<link href="../static/verify.css" rel="stylesheet" type="text/css" />
+<style>
+  .hdiv{
+    background-color: #426374;
+    color: white;
+    font-size: 18px;
+    text-align: left;
+    height: 80px;
+    line-height: 80px;
+    padding-left: 50px;
+    font-weight: bold;
+
+  }
+</style>
+
+<title>打卡签到后台登录</title>
+  <!--<meta name="keywords" content="H-ui.admin v3.1,H-ui网站后台模版,后台模版下载,后台管理系统模版,HTML后台模版下载">-->
+  <!--<meta name="description" content="H-ui.admin v3.1，是一款由国人开发的轻量级扁平化网站后台模板，完全免费开源的网站后台管理系统模版，适合中小型CMS后台系统。">-->
+</head>
+<body>
+<!--<input type="hidden" id="TenantId" name="TenantId" value="" />-->
+<!--<div class="header"></div>-->
+
+<div class="loginWraper">
+  <div >
+    <p class="hdiv">打卡签到后台登录</p>
+  </div>
+  <div id="loginform" class="loginBox">
+    <form class="form form-horizontal" >
+      <div class="row cl">
+        <label class="form-label col-xs-3"><i class="Hui-iconfont">&#xe60d;</i></label>
+        <div class="formControls col-xs-8">
+          <input id="username"type="text" placeholder="账户" class="input-text size-L">
+        </div>
+      </div>
+      <div class="row cl">
+        <label class="form-label col-xs-3"><i class="Hui-iconfont">&#xe60e;</i></label>
+        <div class="formControls col-xs-8">
+          <input id="password" type="password" placeholder="密码" class="input-text size-L">
+        </div>
+      </div>
+      <div class="row cl">
+        <div class="formControls col-xs-8 col-xs-offset-3">
+            <div id="p1">
+              
+            </div>
+        </div>
+      </div>
+
+      <div class="row cl">
+        <div class="formControls col-xs-8 col-xs-offset-3">
+          <input id="btnsubmit" type="button" class="btn btn-success radius size-L" value="&nbsp;登&nbsp;&nbsp;&nbsp;&nbsp;录&nbsp;">
+          <input id="reset" type="reset" class="btn btn-default radius size-L" value="&nbsp;取&nbsp;&nbsp;&nbsp;&nbsp;消&nbsp;">
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="footer">Copyright 欧柏泰克</div>
+<script type="text/javascript" src="../lib/jquery/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="../static/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="../static/verify.min.js"></script>
+<script src="../static/layer/2.4/layer.js"></script>
+<script>
+  $(()=>{
+      //普通验证码的设置
+      $("#p1").codeVerify({
+          type : 1,//普通验证码类型
+          width : '300px',
+          height : '40px',
+          fontSize : '30px',
+          codeLength : 4,//验证码的个数
+          btnId : 'btnsubmit',//点击登录按钮时开始验证
+          success : function() {
+              //$.trim():去除空格
+              let username = $.trim($("#username").val());
+              if(!username){
+                  //layer.js的信息弹出       icon:图片类型取值（1-6），time：弹出消失时间
+                  layer.msg('用户名不能为空！',{icon:5,time:2000});
+                  return;
+              }
+              let password = $.trim($("#password").val());
+              if(!password){
+                  layer.msg('密码不能为空！',{icon:5,time:2000});
+                  return;
+              }
+              location.href='index.html';
+              /*$.ajax({
+                  url:'/user',//注意不需要斜杠
+                  type:'post',
+                  data:{username:username,password:password},
+                  success:function (data) {
+                      if(data.suc){
+                          location.href='index.html';
+                      }else {
+                          layer.msg(data.msg,{icon:5,time:2000});
+                      }
+                  },
+                  dataType:'json'
+              });
+*/
+
+          },
+          error : function() {
+              layer.msg('验证码不匹配！',{icon:5,time:2000});
+          }
+      });
+  });
+</script>
+</body>
+</html>

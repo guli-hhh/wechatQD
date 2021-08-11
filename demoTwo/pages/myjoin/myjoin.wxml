@@ -1,0 +1,50 @@
+<view class="container">
+    <view class="block"></view>
+    <view class="name">{{proObj.projectName}}</view>
+
+    <view class="contain">
+
+    <view class="time">
+        <view class="c">
+            <image src='/images/time.png' ></image>
+        </view>
+        <view class="ti">{{proObj.startTime}}</view>
+    </view>
+
+    <view class="place-name">
+        <view class="n">
+            <image src='/images/place.png' ></image>
+        </view>
+    <view class="place-nam">{{proObj.place_name}}</view>
+    </view>
+
+    <view class="place-address">
+        <view class="m">
+            <image src="/images/plpl.png" ></image>
+        </view>
+    <view class="place-addres">{{proObj.place_address}}</view>
+    </view>
+
+    </view>
+     
+</view> 
+
+<view>
+    <view class="img1" wx:if="{{proObj.pstatus==0}}">
+        <image class="img" src="/images/enter.png"></image>
+        <view class="imgtext">未签到</view>
+    </view>
+    <view class="img2" wx:if="{{proObj.pstatus==1}}">
+        <image class="img" src="/images/check2.png"></image>
+        <view class="imgtext">签到成功</view>
+    </view>
+    <view class="img3" wx:if="{{proObj.pstatus==2}}">
+        <image class="img" src="/images/fail.jpg"></image>
+        <view class="imgtext">签到失败</view>
+    </view>
+</view>
+
+
+<view class="del-btn">
+    <button  bindtap="del" data-id="{{proObj.pid}}" class="bbtn">删除签到</button>
+</view>

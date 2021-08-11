@@ -1,0 +1,9 @@
+<view class="title">
+  已报名人数：{{enroll}}人
+</view>
+<view class="oldlist" wx:if="{{flag}}" wx:for="{{titlearr}}" wx:key="item" bindtap="participant" data-ind="{{item.ind}}">
+  <view class='name'>
+    <image src='/images/green.png' class='dian'></image>
+    <text>{{item.ind+1}}、{{item.title}}</text>
+  </view> 
+</view>

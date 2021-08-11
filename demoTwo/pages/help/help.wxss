@@ -1,0 +1,24 @@
+.topic{
+  font-size: 50rpx;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 45rpx;
+}
+.item{
+  margin-top: 10px;
+  padding: 15px;
+}
+.title{
+  font-size: 18px;
+  font-weight: 600;
+}
+.text{
+  padding: 15px;
+  padding-top: 8px;
+}
+.textimg{
+  height:1050rpx;
+  padding:10px;
+  background-color: #f5f5f5;
+  margin-top: 10px;
+}

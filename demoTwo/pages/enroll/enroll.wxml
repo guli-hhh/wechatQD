@@ -1,0 +1,65 @@
+<view class="name">
+    <view class="block-top"></view>
+    <text>{{projectName}}</text>
+</view>
+<view class="line"></view> 
+
+<form bindsubmit="submit">
+
+    <view class="container" wx:if="{{key1}}">
+        <view class="ask">
+            {{data1}}
+        </view> 
+        <view class="answer">
+            <input type="text" name="value1"/>
+        </view>
+    </view>
+
+    <view class="container" wx:if="{{key2}}">
+        <view class="ask">
+            {{data2}}
+        </view> 
+        <view class="answer">
+            <input type="text" name="value2" type='number'/>
+        </view>
+    </view>
+
+    <view class="container" wx:if="{{key3}}">
+        <view class="ask">
+            {{data3}}
+        </view> 
+        <view class="answer">
+            <input type="text" name="value3"/>
+        </view>
+    </view>
+
+    <view class="container" wx:if="{{key4}}">
+        <view class="ask">
+            {{data4}}
+        </view> 
+        <view class="answer">
+            <input type="text" name="value4"/>
+        </view>
+    </view>
+
+    <view class="container" wx:if="{{key5}}">
+        <view class="ask">
+            {{data5}}
+        </view> 
+        <view class="answer">
+            <input type="text" name="value5"/>
+        </view>
+    </view>
+
+    <view class="btn">
+        <button type="primary" class="btn" formType="submit" >提交</button>
+    </view>
+</form> 
+<view class="block"></view>
+<view wx:if="{{adflag}}" bindtap="adDetial" data-id="{{adObj.ad_id}}"> 
+    <image  class="adUrl" src="{{adObj.advertUrl}}"></image>
+    <view class="divad">
+        <text class="{{ad}}">{{adObj.advertName}}</text>
+        <button class="adbtn" type="primary" size="mini">了解详情</button>
+    </view>
+</view>

@@ -1,0 +1,20 @@
+<view class="container">
+    <image src="/images/tadcap.png" class="img"></image>
+    <text class="txt">I签到</text>
+    <text class="men">www.Ecap.com</text>
+</view>
+
+<image src="/images/line.png" class="line"></image>
+
+<view class="area">
+    <view class="a">I签到是一款免费的扫码签到程序</view>
+    <view class="a">我们也提供小程序、H5开发服务</view>
+    <view class="a">如有问题咨询、软件开发需求</view>
+    <view class="a">欢迎联系我们</view>
+</view>
+
+<view bindlongpress="cut">
+    <image src="/images/wechat.jpg" class="img1"></image>
+    <text class="txt1">长按复制微信号，加我微信</text>
+</view>
+<image src='/images/tal.png' class='tal'></image>

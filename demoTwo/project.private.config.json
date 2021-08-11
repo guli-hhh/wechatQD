@@ -1,0 +1,88 @@
+{
+  "setting": {},
+  "condition": {
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "name": "pages/me/me",
+          "pathName": "pages/me/me",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/sign/sign",
+          "pathName": "pages/sign/sign",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/find/find",
+          "pathName": "pages/find/find",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/publish/publish",
+          "pathName": "pages/publish/publish",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/help/help",
+          "pathName": "pages/help/help",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/us/us",
+          "pathName": "pages/us/us",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/publish/publish",
+          "pathName": "pages/publish/publish",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/network/network",
+          "pathName": "pages/network/network",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/simple/simple",
+          "pathName": "pages/simple/simple",
+          "query": "",
+          "scene": 1044,
+          "shareInfo": {
+            "groupName": "测试模拟群2",
+            "shareName": "YTIgyxASAJKLuUWO6asPBywuuKEYFa_rT3XSnocsTbM@cr4dev",
+            "shareKey": "9ebYfqGZ7AUIF8eLMWPUD1_wS_ilGn13rLUaNPhlN8ROAQPdZAhXUvqvgrgm1xDOUf5090yeHF1L631K41pqXQ~~"
+          }
+        },
+        {
+          "name": "pages/enroll/enroll",
+          "pathName": "pages/enroll/enroll",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/forbidden/forbidden",
+          "pathName": "pages/forbidden/forbidden",
+          "scene": null
+        }
+      ]
+    }
+  }
+}

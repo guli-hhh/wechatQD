@@ -1,0 +1,19 @@
+<view class="container">
+  <view class="title">I签到网页版使用说明</view>
+  <view>
+      I签到网页版是在签到现场有投影的情况下使用。即你不用让别人扫你的手机，屏幕的太小了，也不需打印出来。
+      只需要打开投影，打开连接投影的电脑的浏览器。
+  </view>
+  <view>
+    在浏览器最上面的地址栏里输入：www.tadcap.com
+  </view>
+  <view>
+    <image src="/images/sm1.jpg" style="height:120px;width:100%"></image>
+  </view>
+  <view>
+    然后用蝌蚪签到发现页中间绿色的圆圆的扫一下浏览器的二维码就可以登录了。
+  </view>
+  <view>
+    <image src="/images/sm2.jpg" style="height:250px;width:100%"></image>
+  </view>
+</view>

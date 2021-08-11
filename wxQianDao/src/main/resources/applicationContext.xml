@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Bean生产和装配的配置-->
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
+	http://www.springframework.org/schema/util
+	http://www.springframework.org/schema/util/spring-util-4.1.xsd
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
+    http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-4.1.xsd">
+	<!--定义组件扫描的基础包名-->
+	<context:component-scan base-package="com.**.service"/>
+	<context:component-scan base-package="com.**.utils"/>
+	<!--启用注解配置-->
+	<context:annotation-config></context:annotation-config>
+
+	<!--读取数据库配置属性文件-->
+	<util:properties id="reader" location="classpath:mysql.properties"/>
+
+	<!--配置数据源：c3p0连接池数据源-->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="#{reader[driver]}"/>
+		<property name="jdbcUrl" value="#{reader[url]}"/>
+		<property name="user" value="#{reader[user]}"/>
+		<property name="password" value="#{reader[password]}"/>
+		<!--初始连接数-->
+		<property name="initialPoolSize" value="3"/>
+		<!--最大连接数-->
+		<property name="maxPoolSize" value="7"/>
+		<!--最小连接数-->
+		<property name="minPoolSize" value="3"/>
+		<!--最大空闲时间-->
+		<property name="maxIdleTime" value="120"/>
+	</bean>
+	<!--配置Mybatis映射器扫描基础包名-->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer" id="configurer">
+		<property name="basePackage" value="com.obtk.mapper"/>
+	</bean>
+
+	<!--mybatis的sqlSessionFactory-->
+	<bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactory">
+		<!--数据源使用连接池-->
+		<property name="dataSource" ref="dataSource"/>
+		<!--实体类别名设置-->
+		<property name="typeAliasesPackage" value="com.obtk.domain"/>
+		<!--指定映射文件的路径(有使用xml映射文件时)-->
+		<!--<property name="mapperLocations" value="classpath:mapper/*.xml"/>-->
+		<!--分页插件配置-->
+		<property name="plugins">
+			<set>
+				<bean class="com.github.pagehelper.PageInterceptor">
+					<property name="properties">
+						<props>
+							<!--数据库方言-->
+							<prop key="helperDialect">mysql</prop>
+						</props>
+					</property>
+				</bean>
+			</set>
+		</property>
+	</bean>
+
+	<!--定义事务管理器-->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+
+	<!--启用注解配置事务管理-->
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+
+	<!--自动代理切面配置，使用注解-->
+	<aop:aspectj-autoproxy/>
+
+	<!--发送http请求工具的工厂对象-->
+	<bean class="org.springframework.http.client.OkHttp3ClientHttpRequestFactory" id="factory"/>
+	<!--远程服务调用模板对象-->
+	<bean class="org.springframework.web.client.RestTemplate" id="restTemplate">
+		<constructor-arg ref="factory"/>
+	</bean>
+
+
+
+</beans>

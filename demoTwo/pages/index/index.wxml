@@ -1,0 +1,26 @@
+<view class="photo" wx:if="{{indflag}}">
+  <block wx:if="{{!hasUserInfo}}">
+    <!-- 后端没有用户信息，则没有签到 -->
+    <button bindtap="getUserProfile">使用i签到</button>
+  </block>
+  <block wx:else>
+    <!-- 签到了显示图片 -->
+    <image src="{{buttonImg}}" bindtouchstart="start" bindtouchend="end"></image>
+  </block>
+</view>
+
+<view class='main' wx:if="{{!indflag}}">
+  <view class='adv1'>
+    <image src='{{adUrl}}' class='adv-img' bindtap="adDetial"></image>
+    <text class='tiaoguo' bindtap='cliadv'>跳过广告 {{adsec}}</text>
+  </view>
+  <view>
+    <button>I--签到</button>
+    <text class='text2'>I签到出品，必属精品</text>
+  </view>
+</view>
+
+
+
+
+

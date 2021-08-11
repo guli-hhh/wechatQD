@@ -1,0 +1,45 @@
+<view class="container">
+  <view class="header">
+    <form bindsubmit="formsubmit">
+      <view class="hoverdiv">
+      <view class="hover">
+        <icon type="search"></icon>
+        <input placeholder="输入签到活动邀请码" type="number" name="id"/>
+      </view> 
+      <button class="btn" type="primary" size="mini" formType="submit"  >搜索</button>
+     </view>
+    </form>
+  </view> 
+  <view class="imgdiv">
+    <image class="img1" src="/images/scan.png" bindtap="scancode"></image>
+  </view>
+  <view class="text1">
+    <text>快速访问</text>
+  </view>
+
+  <block wx:for="{{datalist}}" wx:key="item">
+    <view class="oldlist" bindtap="shock" hover-class="hover" hover-stay-time="100" data-id="{{item.proid}}">
+      <view class='name'>
+          <image src='{{item.statussrc}}' class='dian'></image>
+          {{item.projectName}}
+          <image src='/images/right.png' class='right'></image>
+      </view> 
+    </view>
+</block>
+
+
+  <view class="text2" wx:if="{{tips}}">
+    <view>
+      <image class="img2" src="/images/kong.png"></image>
+    </view>
+    <view>
+        你还没有创建过签到
+    </view>
+    <view>
+        创建的签到会在这里显示
+    </view>
+  </view>
+
+
+</view>
+

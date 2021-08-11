@@ -1,0 +1,272 @@
+<!--_meta 作为公共模版分离出去-->
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<link rel="stylesheet" type="text/css" href="../static/h-ui/css/H-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="../static/h-ui.admin/css/H-ui.admin.css" />
+<link rel="stylesheet" type="text/css" href="../lib/Hui-iconfont/1.0.8/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="../static/h-ui.admin/skin/default/skin.css" id="skin" />
+<link rel="stylesheet" type="text/css" href="../static/h-ui.admin/css/style.css" />
+<style>
+	.title{
+		height: 40px;
+		line-height: 40px;
+	}
+	.indbtn1{
+		margin-left: 600px;
+	}
+
+	.barPage1,.barPage2{
+		text-align: right;
+		margin-top: 15px;
+		padding-right: 80px;
+		background-color: #f5f5f5;
+	}
+	#table1,#table2{
+		width: 600px;
+		margin: 20px 50px;
+	}
+	.idiv1,.idiv2{
+		margin-left: 50px;
+		margin-right: 50px;
+	}
+	.item1{
+		height: 30px;
+		width: auto;
+		margin: 0 20px;
+		box-shadow:0px 15px 10px -15px #f1f1f1;
+		border-radius: 10px;
+		padding: 10px;
+	}
+	.spanstyle{
+		margin-left: 10px;
+	}
+</style>
+
+<title>活动数据分析</title>
+</head>
+<body>
+<div>
+	<h3 class="title"><span style="margin-left: 30px"><span id="pname"></span>活动详情:</span><button class="btn btn-primary indbtn1">返回</button></h3>
+	<div class="item1">
+		<div>
+			<span class="total spanstyle">总参与人数</span>
+			<span class="finish spanstyle"></span>
+		</div>
+	</div>
+	<div class="idiv1">
+		<h4 style="text-align: left;margin-left: 20px">报名数据列表：</h4>
+		<table class="table table-border table-bordered table-bg table-hover table-sort" id="table1">
+			<thead>
+			<tr class="text-c">
+				<th width="10">序号</th>
+				<th width="30">姓名</th>
+				<th width="40">电话</th>
+				<th width="30" id="diy31"></th>
+				<th width="30" id="diy41"></th>
+				<th width="30" id="diy51"></th>
+				<th width="20">状态</th>
+			</tr>
+			</thead>
+			<tbody id="list1" style="text-align: center"></tbody>
+		</table>
+		<p class="barPage1" >
+
+		</p>
+	</div>
+	<div class="idiv2">
+		<h4 style="text-align: left;margin-left: 20px">签到成功列表：</h4>
+		<table class="table table-border table-bordered table-bg table-hover table-sort" id="table2">
+			<thead>
+			<tr class="text-c">
+				<th width="10">序号</th>
+				<th width="30">姓名</th>
+				<th width="40">电话</th>
+				<th width="30" id="diy32"></th>
+				<th width="30" id="diy42"></th>
+				<th width="30" id="diy52"></th>
+			</tr>
+			</thead>
+			<tbody id="list2" style="text-align: center"></tbody>
+		</table>
+		<p class="barPage2" >
+
+		</p>
+	</div>
+
+</div>
+
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="../lib/jquery/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="../static/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="../static/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="../static/h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer /作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="../lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="../lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="../lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript" src="../bootstrap/js/jquery.js"></script>
+<script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../static/layer/2.4/layer.js"></script>
+
+<script type="text/javascript">
+$(function(){
+
+    //取出浏览器会话缓存中的值。
+    let proid = sessionStorage.getItem("proid");
+    let pname = sessionStorage.getItem("pname");
+	if(proid){
+		//活动名
+		$("#pname").text(pname);
+		//填充表头
+		$.ajax({
+			url:"/wx/pro/findOne"+proid,
+			type:"get",
+			success:function (data) {
+				if(data){
+				    $("#diy31").text(data.diy3==="未定义"?"":data.diy3);
+				    $("#diy32").text(data.diy3==="未定义"?"":data.diy3);
+				    $("#diy41").text(data.diy4==="未定义"?"":data.diy4);
+				    $("#diy42").text(data.diy4==="未定义"?"":data.diy4);
+				    $("#diy51").text(data.diy5==="未定义"?"":data.diy5);
+				    $("#diy52").text(data.diy3==="未定义"?"":data.diy5);
+				}
+            }
+		})
+        byPage1(proid,1);
+        byPage2(proid,1);
+	    sessionStorage.removeItem("proid");
+	    sessionStorage.removeItem("pname");
+	}
+    //分页 页号查询事件
+    $(".barPage1").on("click",".byPage1",function () {
+        var pNo=$(this).text();
+        $("#list1").empty();
+        $(".barPage1").empty();
+        byPage1(proid,pNo)
+    });
+    //分页 页号查询事件
+    $(".barPage2").on("click",".byPage2",function () {
+        var pNo=$(this).text();
+        $("#list2").empty();
+        $(".barPage2").empty();
+        byPage2(proid,pNo)
+    });
+});
+
+//分页查询
+function byPage1(proid,pageNo) {
+    $.ajax({
+        url: '/wx/pro/getProEnroll/'+proid+'/'+pageNo,//注意不需要斜杠
+        type:'get',
+        dataType:'json',
+        success:function (data) {
+            console.log(data);
+            $(".total").text("总参与人数："+data.total);
+            if(data.list.length===0){
+                $(".idiv1").hide();
+			}else {
+
+                for (let i=0;i<data.list.length;i++){
+                    let p=data.list[i];
+                    let status="";
+                    if(p.status===0){
+                        status="未签到"
+                    }else if(p.status===1){
+                        status="已签到"
+                    }else if(p.status===2){
+                        status="签到失败"
+                    }
+
+                    let $tr=$(`
+                    <tr class="text-c">
+						<th width="10">${i+1}</th>
+						<th width="30">${p.pname==null?"":p.pname}</th>
+						<th width="40">${p.phone==null?"":p.phone}</th>
+						<th width="30">${p.diy3==null?"":p.diy3}</th>
+						<th width="30">${p.diy4==null?"":p.diy4}</th>
+						<th width="30">${p.diy5==null?"":p.diy5}</th>
+						<th width="20">${status}</th>
+					</tr>
+                    `);
+                    $("#list1").append($tr);
+                }
+
+                data.navigatepageNums.forEach(n=>{
+                    let abtn=$(`<span class="byPage1" style="cursor: pointer;
+                          height: 10px;
+                          width: 10px;
+                          line-height: 10px;
+                          border-radius: 5px;
+                          background-color: #f5fafe;
+                          margin-right: 8px">${n}</span>`);
+                    $(".barPage1").append(abtn);
+                })
+
+
+            }
+        }
+    });
+}
+
+//分页查询
+function byPage2(proid,pageNo) {
+    $.ajax({
+        url: '/wx/pro/getProSign/'+proid+'/'+pageNo,//注意不需要斜杠
+        type:'get',
+        dataType:'json',
+        success:function (data) {
+            console.log(data);
+            $(".finish").text("签到人数："+data.total);
+            if(data.list.length===0){
+                $(".idiv2").hide();
+            }else {
+
+                for (let i=0;i<data.list.length;i++){
+                    let p=data.list[i];
+                    let $tr=$(`
+                    <tr class="text-c">
+						<th width="10">${i+1}</th>
+						<th width="30">${p.pname==null?"":p.pname}</th>
+						<th width="40">${p.phone==null?"":p.phone}</th>
+						<th width="30">${p.diy3==null?"":p.diy3}</th>
+						<th width="30">${p.diy4==null?"":p.diy4}</th>
+						<th width="30">${p.diy5==null?"":p.diy5}</th>
+					</tr>
+                    `);
+                    $("#list2").append($tr);
+                }
+
+                data.navigatepageNums.forEach(n=>{
+                    let abtn=$(`<span class="byPage2" style="cursor: pointer;
+                          height: 10px;
+                          width: 10px;
+                          line-height: 10px;
+                          border-radius: 5px;
+                          background-color: #f5fafe;
+                          margin-right: 8px">${n}</span>`);
+                    $(".barPage2").append(abtn);
+                })
+
+
+            }
+        }
+    });
+}
+
+//返回按钮
+$(".indbtn1").click(function () {
+    location.href="activemanage.html";
+});
+
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>
